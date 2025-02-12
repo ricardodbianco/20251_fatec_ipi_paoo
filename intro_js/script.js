@@ -1,4 +1,15 @@
+//funções, código 1.6.1
+//definição
+// function hello(){
+//     console.log('oi')
+// }
+// //chamada da função
+// hello(undefined)
 
+// function hello(nome){
+//     console.log('Oi, ' + nome)
+// }
+// hello('Pedro')
 
 //vetores
 //declaração
