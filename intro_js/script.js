@@ -1,3 +1,55 @@
+const computacaoDemorada = () => {
+    //aqui demora pois a funcao é iobound
+}
+
+//processamento síncrono (bloqueante) e processamento assíncrono(não bloqueante)
+// const fs = require('fs')
+// //função callback
+function calculoDemorado(n){
+    //1 + 2 + ... + n-1 + n
+    //1. Construir um objeto do tipo Promise, entregando para o construtor a função que representa a computação demorada
+    //a função que representa a computação demorada, recebe duas funções como parâmetro. A primeira deve ser chamada quando a computação terminar com sucesso. A segunda, por outro lado, deve ser chamada quando a computação terminar com erro.
+    const p = new Promise((resolve, reject) => {
+        let acumulador = 0
+        for (let i = 1; i <= n; i++) 
+            acumulador += i
+        resolve(acumulador)    
+    })
+    //2 devolver a promise
+    return p
+}
+
+const promiseResultante = calculoDemorado(10)
+promiseResultante.then((res) => {
+    console.log(`Deu certo: ${res}`)
+})
+
+// //inferno de callbacks
+// //callback hell
+// const exibirConteudo = (erro, conteudo) => {
+//     if(erro){
+//         console.log(`Deu erro: ${erro}`)
+//     }
+//     else{
+//         console.log(`Funcionou: ${conteudo.toString()}`)
+//         const dobro = Number(conteudo.toString()) * 2
+//         //callback (você define mas não chama)
+//         const finalizar = (erro) => {
+//             console.log(`${erro ? 'Deu erro: ' + erro : 'Dobro armazenado com sucesso. C'}`)
+//         }
+//         fs.writeFile('dobro.txt', dobro.toString(), finalizar)
+//         console.log("A")
+//     }
+// }
+// fs.readFile("arquivo.txt", exibirConteudo)//IO-Bound
+// console.log("B")
+// function dobro(n){
+//     return 2 * n
+// }
+// const res = dobro(5)
+// console.log(res)
+//IO-Bound
+
 
 //objetos JSON: JavaScript Object Notation
 
