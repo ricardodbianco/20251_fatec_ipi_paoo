@@ -1,28 +1,132 @@
-const computacaoDemorada = () => {
-    //aqui demora pois a funcao é iobound
+const fatorial = (n) => {
+    // n! = n * (n-1) * (n-2) * ... * 1
+    if (n < 0) return Promise.reject('Somente valores positivos')
+    let f = 1
+    for(let i = 2; i <= n; i++) 
+        f *= i
+    return Promise.resolve(f)
 }
 
-//processamento síncrono (bloqueante) e processamento assíncrono(não bloqueante)
-// const fs = require('fs')
-// //função callback
-function calculoDemorado(n){
-    //1 + 2 + ... + n-1 + n
-    //1. Construir um objeto do tipo Promise, entregando para o construtor a função que representa a computação demorada
-    //a função que representa a computação demorada, recebe duas funções como parâmetro. A primeira deve ser chamada quando a computação terminar com sucesso. A segunda, por outro lado, deve ser chamada quando a computação terminar com erro.
-    const p = new Promise((resolve, reject) => {
-        let acumulador = 0
-        for (let i = 1; i <= n; i++) 
-            acumulador += i
-        resolve(acumulador)    
-    })
-    //2 devolver a promise
-    return p
-}
+//tratar com then/catch
+function chamadaComThenCatch(){
+    fatorial(5)
+    .then(res => console.log(`Funcionou: ${res}`))
+    .catch(err => console.log(`Erro: ${err}`))
 
-const promiseResultante = calculoDemorado(10)
-promiseResultante.then((res) => {
-    console.log(`Deu certo: ${res}`)
-})
+    fatorial(-1)
+    .then(res => console.log(`Funcionou: ${res}`))
+    .catch(err => console.log(`Erro: ${err}`))
+}
+chamadaComThenCatch()
+//tratar com async/await
+// async function chamadaComAsyncAwait(){}
+const chamadaComAsyncAwait = async () => {
+    try{
+        const f1 = await fatorial(5)
+        console.log(f1)
+    }
+    catch(err){
+        console.log(`Erro: ${err}`)
+    }
+
+    try{
+        const f2 = await fatorial(-1)
+        console.log(`${f2}`)
+        
+    }
+    catch(err){
+        console.log(`Erro: ${err}`)
+    }
+}
+chamadaComAsyncAwait()
+//async/await
+// async function hello(nome){
+//     return `Oi, ${nome}`
+// }
+
+// function hello(nome){
+//     return new Promise((resolve, reject) => {
+//         resolve(`Oi, ${nome}`)
+//     })
+// }
+
+// const res = hello('Ivo')
+// res.then(saudacao => console.log(`${saudacao}`))
+
+// const res = hello('Ivo')
+// console.log(res)
+
+
+
+//1 + 2 + ... + (n-1) + n
+//complete para que essa função opere como antes. não vale usar os métodos resolve e reject da classe Promise
+// function calculoRapidinho(n){
+//     return new Promise((resolve, reject) => {
+//         if( n < 0)
+//             reject('Use somente valores positivos')
+//         else
+//             resolve((n / 2) * (n + 1))
+//     })
+// }
+// function calculoRapidinho(n){
+//     //verificar se n é negativo
+//     //se for negativo, devolver uma promise no estado rejected com a seguinte mensagem de erro: Use apenas números positivos
+//     //caso contrário, devolver um promise fullfilled, como já estamos fazendo
+//     //não pode usar if/else nem switch/case
+//     return  n < 0 ? 
+//         Promise.reject('Use apenas números positivos') :
+//         Promise.resolve((n / 2) * (n + 1))
+// }
+
+// calculoRapidinho(10)
+// .then((abc) => {
+//     console.log(`Sucesso: ${abc}`)
+// })
+// .catch((a) => console.log(`Erro: ${a}`))
+
+
+// function calculoDemorado(n){
+//     const p = new Promise((resolve, reject) => {
+//         let ac = 0
+//         for (let i = 1; i <= n; i++) ac += i
+//         resolve(ac)
+//     })
+//     return p
+// }
+
+// const minhaPromise = calculoDemorado(10)
+// minhaPromise.then((res) => {
+//     console.log(`Sucesso: ${res}`)
+// })
+
+
+
+
+// const computacaoDemorada = () => {
+//     //aqui demora pois a funcao é iobound
+// }
+
+// //processamento síncrono (bloqueante) e processamento assíncrono(não bloqueante)
+// // const fs = require('fs')
+// // //função callback
+// function calculoDemorado(n){
+//     //1 + 2 + ... + n-1 + n
+//     //1. Construir um objeto do tipo Promise, entregando para o construtor a função que representa a computação demorada
+//     //a função que representa a computação demorada, recebe duas funções como parâmetro. A primeira deve ser chamada quando a computação terminar com sucesso. A segunda, por outro lado, deve ser chamada quando a computação terminar com erro.
+//     const p = new Promise((resolve, reject) => {
+//         let acumulador = 0
+//         for (let i = 1; i <= n; i++) 
+//             acumulador += i
+//         resolve(acumulador)    
+//     })
+//     //2 devolver a promise
+//     return p
+// }
+
+// const promiseResultante = calculoDemorado(10)
+// promiseResultante.then((res) => {
+//     console.log(`Deu certo: ${res}`)
+// })
 
 // //inferno de callbacks
 // //callback hell
