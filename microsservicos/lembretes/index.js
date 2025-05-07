@@ -1,3 +1,4 @@
+const axios = require('axios')
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -27,7 +28,19 @@ app.post('/lembretes', (req, res) => {
     id,
     texto
   }
+  axios.post('http://localhost:10000/eventos', {
+    tipo: 'LembreteCriado',
+    dados: {id, texto}
+  })
   res.status(201).json(lembretes[id])
+})
+
+//definir o endpoint da figura
+//ele deve exibir o evento e encerra o tratamento da requisição com res.end
+app.post('/eventos', (req, res) => {
+  const evento = req.body
+  console.log(evento)
+  res.end()
 })
 
 //localhost:porta
