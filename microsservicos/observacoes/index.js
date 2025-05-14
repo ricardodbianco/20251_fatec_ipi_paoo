@@ -23,15 +23,17 @@ app.post('/lembretes/:id/observacoes', (req, res) => {
   const idObs = uuidv4()
   const { texto } = req.body
   const observacoesDoLembrete = observacoesPorLembrete[req.params.id] || []
-  observacoesDoLembrete.push({
+  const observacao = {
     id: idObs,
     lembreteId: req.params.id,
-    texto
-  })
+    texto,
+    status: 'aguardando'
+  }
+  observacoesDoLembrete.push(observacao)
   //emitir um evento do tipo ObservacaoCriada, passando a observação associada ao campo dados
   axios.post('http://localhost:10000/eventos', {
     tipo: 'ObservacaoCriada',
-    dados: {id: idObs, lembreteId: req.params.id, texto}
+    dados: observacao
   })
   observacoesPorLembrete[req.params.id] = observacoesDoLembrete
   res.status(201).json(observacoesDoLembrete)

@@ -2,12 +2,8 @@ const axios = require('axios')
 const express = require('express')
 const app = express()
 app.use(express.json())
-let id = 1
+let id = 0
 const lembretes = {
-  1: {
-    id: id,
-    texto: 'Fazer feira'
-  } 
 }
 
 //GET /lembretes () => {} (endpoint)
