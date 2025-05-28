@@ -1,3 +1,4 @@
+const axios = require('axios')
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -28,14 +29,20 @@ app.use(express.json())
 const baseConsolidada = {}
 
 const funcoes = {
-  LembreteCriado: (lembrete) => {
+  LembreteCriado: async (lembrete) => {
     baseConsolidada[lembrete.id] = lembrete
   },
-  ObservacaoCriada: (observacao) => {
+  ObservacaoCriada: async (observacao) => {
     const observacoes = baseConsolidada[observacao.lembreteId]['observacoes'] || []
     observacoes.push(observacao)
     baseConsolidada[observacao.lembreteId]['observacoes'] = observacoes
   },
+  ObservacaoAtualizada: async (observacao) => {
+    //atualizar a base consolidada
+    const observacoes = baseConsolidada[observacao.lembreteId]['observacoes']
+    const indice = observacoes.findIndex(o => o.id === observacao.id)
+    observacoes[indice] = observacao
+  }
   
 }
 //endpoint para obtenção da base consolidada (o front end usa)
@@ -44,12 +51,26 @@ app.get('/lembretes', (req, res) => {
   res.json(baseConsolidada)
 })
 //endpoint para receber eventos (o barramento usa)
-app.post('/eventos', (req, res) => {
-  const evento = req.body
-  console.log(evento)
-  funcoes[evento.tipo](evento.dados)
-  res.end()
+app.post('/eventos', async (req, res) => {
+  try{
+    const evento = req.body
+    console.log(evento)
+    await funcoes[evento.tipo](evento.dados)
+  }
+  catch(e){}
+  finally{
+    res.end()
+  }
 })
 
 const port = 6000
-app.listen(port, () => console.log(`Consulta. Porta ${port}.`))
+app.listen(port, async () => {
+  console.log(`Consulta. Porta ${port}.`)
+  const resp = await axios.get('http://localhost:10000/eventos')
+  resp.data.forEach((eventoPerdido) => {
+    try{
+      funcoes[eventoPerdido.tipo](eventoPerdido.dados)
+    }
+    catch(e){}
+  })
+})

@@ -3,14 +3,35 @@ const axios = require('axios')
 const app = express()
 app.use(express.json())
 
-app.post('/eventos', (req, res) => {
+//declarar uma lista para armazenar eventos perdidos
+const eventos = []
+app.post('/eventos', async (req, res) => {
   const evento = req.body
   console.log(evento)
-  axios.post('http://localhost:4000/eventos', evento)
-  axios.post('http://localhost:5000/eventos', evento)
-  axios.post('http://localhost:6000/eventos', evento)
-  axios.post('http://localhost:7000/eventos', evento)
+  //adicionar o evento da vez à lista de eventos perdidos
+  eventos.push(evento)
+  try{
+    axios.post('http://localhost:4000/eventos', evento)
+  }
+  catch(e){}
+  try{
+    axios.post('http://localhost:5000/eventos', evento)
+  }
+  catch(e){}
+  try{
+    axios.post('http://localhost:6000/eventos', evento)
+  }
+  catch(e){}
+  try{
+    axios.post('http://localhost:7000/eventos', evento)
+  }
+  catch(e){ }
   res.end()
+})
+
+//fazer um endpoint GET /eventos devolvendo a coleção de eventos perdidos
+app.get('/eventos', (req, res) => {
+  res.json(eventos)
 })
 
 //colocar o barramento em execução na porta 10000. mostre um log dizendo que ele subiu nessa porta

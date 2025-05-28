@@ -33,10 +33,15 @@ app.post('/lembretes', (req, res) => {
 
 //definir o endpoint da figura
 //ele deve exibir o evento e encerra o tratamento da requisição com res.end
-app.post('/eventos', (req, res) => {
-  const evento = req.body
-  console.log(evento)
-  res.end()
+app.post('/eventos', async (req, res) => {
+  try{
+    const evento = req.body
+    console.log(evento)
+  }
+  catch(e){}
+  finally{
+    res.end()
+  }
 })
 
 //localhost:porta
