@@ -24,7 +24,7 @@ app.post('/lembretes', (req, res) => {
     id,
     texto
   }
-  axios.post('http://localhost:10000/eventos', {
+  axios.post('http://192.168.68.110:10000/eventos', {
     tipo: 'LembreteCriado',
     dados: {id, texto}
   })

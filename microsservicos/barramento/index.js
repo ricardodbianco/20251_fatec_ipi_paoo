@@ -11,19 +11,19 @@ app.post('/eventos', async (req, res) => {
   //adicionar o evento da vez à lista de eventos perdidos
   eventos.push(evento)
   try{
-    axios.post('http://localhost:4000/eventos', evento)
+    axios.post('http://192.168.68.110:4000/eventos', evento)
   }
   catch(e){}
   try{
-    axios.post('http://localhost:5000/eventos', evento)
+    axios.post('http://192.168.68.110:5000/eventos', evento)
   }
   catch(e){}
   try{
-    axios.post('http://localhost:6000/eventos', evento)
+    axios.post('http://192.168.68.110:6000/eventos', evento)
   }
   catch(e){}
   try{
-    axios.post('http://localhost:7000/eventos', evento)
+    axios.post('http://192.168.68.110:7000/eventos', evento)
   }
   catch(e){ }
   res.end()

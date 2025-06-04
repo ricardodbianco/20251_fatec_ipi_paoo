@@ -15,7 +15,7 @@ const funcoes = {
     //use a observacao como "dados"
     //emita o evento com a axios
     await axios.post(
-        'http://localhost:10000/eventos',{
+        'http://192.168.68.110:10000/eventos',{
           tipo: 'ObservacaoClassificada',
           dados: observacao
         }
