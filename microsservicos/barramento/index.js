@@ -26,6 +26,10 @@ app.post('/eventos', async (req, res) => {
     axios.post('http://192.168.68.110:7000/eventos', evento)
   }
   catch(e){ }
+  try{
+    axios.post('http://192.168.68.110:8000/eventos', evento)
+  }
+  catch(e){ }
   res.end()
 })
 

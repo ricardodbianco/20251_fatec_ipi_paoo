@@ -24,7 +24,7 @@ app.post('/usuarios', (req, res) =>{
     res.status(201).json(usuarios[id])
 })
 
-const port = 5000
+const port = 8000
 app.listen(port, () =>{
     console.log(`Usuarios. Porta ${port}.`)
 })

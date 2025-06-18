@@ -73,5 +73,5 @@ app.post('/eventos', async (req, res) => {
 
 const port = 5000
 app.listen(port, () => {
-  console.log(`Observações. Porta ${port}.`)
+  console.log(`Observacoes. Porta ${port}.`)
 })
