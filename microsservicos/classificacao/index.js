@@ -62,7 +62,8 @@ const recuperarEventosPerdidos = async () => {
     const response = await axios.get('http://192.168.68.110:4000/lembretes')
     const lembretes = response.data
     
-    for(const [id, lembrete] of Object.entries(lembretes)) {
+    for(const id in lembretes) {
+      const lembrete = lembretes[id]
       if(!classificacoes[id]) {
         await funcoes.LembreteCriado(lembrete)
       }
